@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['.codeanyapp.com','backend_apax_fio-abramgornik898996.codeanyap
 # Application definition
 
 INSTALLED_APPS = [
+    'weather.apps.WeatherConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EDT'
 
 USE_I18N = True
 
