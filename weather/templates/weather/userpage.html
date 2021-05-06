@@ -15,5 +15,24 @@
   </head>
   <body>
     <p>Logged in as user {{ user.username }}.</p>
+    <p>Add a location to check the weather:</p>
+    <form action="{% url 'weather:add_location' user.id %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="zip_code" >
+      <!-- <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br> -->
+      <input type="submit" value="Add">
+    </form>
+    <h2>Locations:</h2>
+    {% if location_list %}
+      {% for location in location_list %}
+        <h3>{{ location.location_name }}</h3>
+        <form action="{% url 'weather:delete_location' user.id location.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="x">
+        </form>
+      {% endfor %}
+    {% else %}
+      <p>No locations have been added.</p>
+    {% endif %}
   </body>
 </html>
