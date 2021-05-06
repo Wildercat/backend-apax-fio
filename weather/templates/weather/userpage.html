@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>User page</title>
-  </head>
-  <body>
-    <p>Welcome, {{ user.username }}.</p>
-    <p>Add a location to check the weather:</p>
-    <form action="{% url 'weather:add_location' user.id %}" method="post">
+
+<head>
+  <meta charset="utf-8">
+  <title>User page</title>
+</head>
+
+<body>
+  <p>Welcome, {{ user.username }}.</p>
+  <p>Add a location to check the weather:</p>
+  <form action="{% url 'weather:add_location' user.id %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="zip_code" minlength="5" maxlength="5" required>
+    <!-- <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br> -->
+    <input type="submit" value="Add">
+  </form>
+  <h2>Locations:</h2>
+  <form action="{% url 'weather:update_all_location' user.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Refresh All">
+  </form>
+  {% if location_list %}
+  {% for location in location_list %}
+  <h3>{{ location.location_name }} <img src="http://openweathermap.org/img/wn/{{ location.weather_icon }}.png">
+    <form action="{% url 'weather:delete_location' user.id location.id %}" method="post">
       {% csrf_token %}
-      <input type="text" name="zip_code" >
-      <!-- <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br> -->
-      <input type="submit" value="Add">
+      <input type="submit" value="Delete">
     </form>
-    <h2>Locations:</h2>
-    <form action="{% url 'weather:update_all_location' user.id %}" method="post">
+    <form action="{% url 'weather:update_location' user.id location.id %}" method="post">
       {% csrf_token %}
-      <input type="submit" value="Refresh All">
+      <input type="submit" value="Refresh">
     </form>
-    {% if location_list %}
-      {% for location in location_list %}
-        <h3>{{ location.location_name }}</h3>
-        <form action="{% url 'weather:delete_location' user.id location.id %}" method="post">
-          {% csrf_token %}
-          <input type="submit" value="Delete">
-        </form>
-        <form action="{% url 'weather:update_location' user.id location.id %}" method="post">
-          {% csrf_token %}
-          <input type="submit" value="Refresh">
-        </form>
-        <p><b>
-          {{ location.weather_main }}, {{ location.main_temp }}°
-        </b></p>
-        <p>
-          High: {{ location.main_temp_max }}° Low: {{ location.main_temp_min}}°
-        </p>
-      {% endfor %}
-    {% else %}
-      <p>No locations have been added.</p>
-    {% endif %}
-  </body>
+  </h3>
+
+  <p><b>
+      {{ location.weather_main }}, {{ location.main_temp }}°
+    </b></p>
+  <p>
+    High: {{ location.main_temp_max }}° Low: {{ location.main_temp_min}}°
+  </p>
+  {% endfor %}
+  {% else %}
+  <p>No locations have been added.</p>
+  {% endif %}
+</body>
+
 </html>

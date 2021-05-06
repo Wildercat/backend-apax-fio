@@ -27,16 +27,19 @@ def update(location_id):
     
     location = get_object_or_404(Location, pk=location_id)
     data = lookup(location.zip_code)
+    try:
+        if data['cod']:
+            location.delete()
+    except:
+        location.location_name = data['name']
+        location.weather_main = data['weather'][0]['main']
+        location.weather_desc = data['weather'][0]['description']
+        location.weather_icon = data['weather'][0]['icon']
+        location.main_temp = data['main']['temp']
+        location.main_temp_min = data['main']['temp_min']
+        location.main_temp_max = data['main']['temp_max']
 
-    location.location_name = data['name']
-    location.weather_main = data['weather'][0]['main']
-    location.weather_desc = data['weather'][0]['description']
-    location.weather_icon = data['weather'][0]['icon']
-    location.main_temp = data['main']['temp']
-    location.main_temp_min = data['main']['temp_min']
-    location.main_temp_max = data['main']['temp_max']
-    
-    location.save()
+        location.save()
 
 # location CRUD
 def add_location(request,user_id):
