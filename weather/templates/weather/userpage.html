@@ -1,12 +1,3 @@
-<!-- {% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="/weather/{{ user.id }}/">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %} -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,7 +5,7 @@
     <title>User page</title>
   </head>
   <body>
-    <p>Logged in as user {{ user.username }}.</p>
+    <p>Welcome, {{ user.username }}.</p>
     <p>Add a location to check the weather:</p>
     <form action="{% url 'weather:add_location' user.id %}" method="post">
       {% csrf_token %}
@@ -23,13 +14,27 @@
       <input type="submit" value="Add">
     </form>
     <h2>Locations:</h2>
+    <form action="{% url 'weather:update_all_location' user.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Refresh All">
+    </form>
     {% if location_list %}
       {% for location in location_list %}
         <h3>{{ location.location_name }}</h3>
         <form action="{% url 'weather:delete_location' user.id location.id %}" method="post">
           {% csrf_token %}
-          <input type="submit" value="x">
+          <input type="submit" value="Delete">
         </form>
+        <form action="{% url 'weather:update_location' user.id location.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Refresh">
+        </form>
+        <p><b>
+          {{ location.weather_main }}, {{ location.main_temp }}°
+        </b></p>
+        <p>
+          High: {{ location.main_temp_max }}° Low: {{ location.main_temp_min}}°
+        </p>
       {% endfor %}
     {% else %}
       <p>No locations have been added.</p>
