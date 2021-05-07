@@ -1,0 +1,16 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Weather</title>
+  </head>
+  <body>
+    <p>Enter a username</p>
+    <form action="{% url 'weather:login' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="username" minlength="1" maxlength="50" required>
+      <input type="submit" value="Login">
+    </form>
+  </body>
+</html>
