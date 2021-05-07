@@ -22,7 +22,7 @@
   </form>
   {% if location_list %}
   {% for location in location_list %}
-  <h3>{{ location.location_name }} <img src="http://openweathermap.org/img/wn/{{ location.weather_icon }}.png">
+  <h3>{{ location.location_name }} 
     <form action="{% url 'weather:delete_location' user.id location.id %}" method="post">
       {% csrf_token %}
       <input type="submit" value="Delete">
@@ -34,7 +34,7 @@
   </h3>
 
   <p><b>
-      {{ location.weather_main }}, {{ location.main_temp }}°
+    <img src="http://openweathermap.org/img/wn/{{ location.weather_icon }}.png">{{ location.weather_main }}, {{ location.main_temp }}°
     </b></p>
   <p>
     High: {{ location.main_temp_max }}° Low: {{ location.main_temp_min}}°

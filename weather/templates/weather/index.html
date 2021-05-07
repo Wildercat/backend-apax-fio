@@ -1,12 +1,4 @@
-<!-- {% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="/weather/{{ user.id }}/">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %} -->
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -17,8 +9,7 @@
     <p>Enter a username</p>
     <form action="{% url 'weather:login' %}" method="post">
       {% csrf_token %}
-      <input type="text" name="username" minlength="1" required>
-      <!-- <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br> -->
+      <input type="text" name="username" minlength="1" maxlength="50" required>
       <input type="submit" value="Login">
     </form>
   </body>

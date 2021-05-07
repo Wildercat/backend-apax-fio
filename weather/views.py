@@ -27,10 +27,10 @@ def update(location_id):
     
     location = get_object_or_404(Location, pk=location_id)
     data = lookup(location.zip_code)
-    try:
-        if data['cod']:
-            location.delete()
-    except:
+    print(data)
+    if data['cod'] == '404':
+        location.delete()
+    else:
         location.location_name = data['name']
         location.weather_main = data['weather'][0]['main']
         location.weather_desc = data['weather'][0]['description']

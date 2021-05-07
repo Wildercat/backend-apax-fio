@@ -25,7 +25,7 @@ API: I went very bare bones with how I used the openweathermap API. Currently,th
 
 Front-end: I have done nearly zero aesthetic work on this project. I don't believe this represents my aptitude for such tasks, but it may represent my level of interest in them.
 
-Data Model: The two tables for this project currently have a One to Many relationships. (A User can have many Locations) This means there's potentially duplicate data being stored if multiple users are keeping track of the same location. The solution for this would be to establish a Many to Many relationship so that multiple Users may refer to the same instance of a Location.
+Data Model: The two tables for this project currently have a One to Many relationship. (A User can have many Locations) This means there's potentially duplicate data being stored if multiple users are keeping track of the same location. The solution for this would be to establish a Many to Many relationship so that multiple Users may refer to the same instance of a Location.
 
 Security: This is a horrifically insecure app. There is no real authentication and any of the endpoints can be hit with no restrictions. This was clearly stated as not a requirement, but I want to  mention it so that it's clear I'm aware of the issue.
 
